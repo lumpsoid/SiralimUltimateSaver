@@ -16,9 +16,6 @@ interface ResourcesCardProps
 
 const ResourcesCard: React.FC<ResourcesCardProps> = ({ saveFile, onDataCallback }) =>
 {
-  const [inputValue, setInputValue] = useState('');
-  const [resourceType, setResourceType] = useState('');
-
   const resourceOptions = [
     { label: "All", value: "All" },
     { label: "Brimstone", value: "Brimstone" },
@@ -27,6 +24,12 @@ const ResourcesCard: React.FC<ResourcesCardProps> = ({ saveFile, onDataCallback 
     { label: "Crystal", value: "Crystal" },
     { label: "Granite", value: "Granite" },
   ]
+
+  const [inputValue, setInputValue] = useState('');
+  //Brimstone
+  const [resourceType, setResourceType] = useState(resourceOptions[1].label);
+
+
 
   const addBrimstoneClick = () =>
   {
@@ -41,6 +44,7 @@ const ResourcesCard: React.FC<ResourcesCardProps> = ({ saveFile, onDataCallback 
       return;
     }
     let saveFileNew;
+    console.log(`resourceType: ${resourceType}`);
     switch (resourceType) {
       case "All":
         let saveFileUpdated = changeValueByKey(saveFile, "Brimstone", inputValue);
@@ -69,7 +73,7 @@ const ResourcesCard: React.FC<ResourcesCardProps> = ({ saveFile, onDataCallback 
     }
     onDataCallback(saveFileNew);
     setInputValue('');
-    Notification('Resource has been added.');
+    Notification(`Resource "${resourceType}" has been added.`);
   }
 
   const onResourceTypeChange = (newValue: string) =>
@@ -85,7 +89,8 @@ const ResourcesCard: React.FC<ResourcesCardProps> = ({ saveFile, onDataCallback 
           options={resourceOptions}
           id={'resources-select'}
           inputLabel={'Resource type'}
-          defaultValue={'Brimstone'}
+          // Brimstone
+          defaultValue={resourceOptions[1].label}
           onChangeCallback={onResourceTypeChange}
         />
         <TextField
