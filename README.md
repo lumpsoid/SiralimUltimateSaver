@@ -7,6 +7,8 @@ If you are interested in building builds, there is [the site](https://berated-be
 This project based on [gurgalex](https://github.com/gurgalex) work on implementing encryption and decryption of the Siralim save file ([his repo]( https://github.com/gurgalex/SiralimUltimateSaver)).
 
 ## Available manipulations
+- Encrypt a save file
+- Decrypt a save file
 - Add:
   - resource:
     - all
