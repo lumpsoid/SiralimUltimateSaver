@@ -92,7 +92,6 @@ const FileUploader: React.FC<FileUploaderProps> = ({ saveFile, onDataCallback })
         break;
       default:
         throw new Error('Selected invalide save type.')
-        break;
     }
     // Create a temporary link element
     const link = document.createElement('a');

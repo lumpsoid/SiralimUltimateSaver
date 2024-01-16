@@ -193,7 +193,7 @@ export const addKnowledge = (
   console.log(matchKnowledge);
   const creatureId = getCreatureId(creatureData, creatureName);
   const knowledgeArray = matchKnowledge[1];
-  const creaturePatter = new RegExp(`(${creatureId},\\d+),\?`);
+  const creaturePatter = new RegExp(`(${creatureId},\\d+),?`);
   const matchCreature = knowledgeArray.match(creaturePatter);
 
   const knowledgeArrayNew = matchCreature
@@ -279,6 +279,12 @@ export const replaceValuesByKey = (
   return file.copyWith({ contentNew: fileNew });
 }
 
+enum ConvertType
+{
+  ENCODE = "ENCODE",
+  DECODE = "DECODE"
+}
+
 export const encodeFile = (file: SaveFile): SaveFile =>
 {
   const text: string[] = splitLines(file.contentNew);
@@ -311,12 +317,6 @@ export const decodeFile = (file: SaveFile): SaveFile =>
     .filter((el) => el !== null) as string[];
   return file.copyWith({ contentNew: output.join('\n') });
 };
-
-enum ConvertType
-{
-  ENCODE = "ENCODE",
-  DECODE = "DECODE"
-}
 
 enum LineType
 {

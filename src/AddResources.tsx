@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SaveFile, changeValueByKey, addKnowledge, Knowledge } from './SaveFile';
+import { SaveFile, changeValueByKey } from './SaveFile';
 import { Notification, Alert } from './Notification';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -66,7 +66,6 @@ const ResourcesCard: React.FC<ResourcesCardProps> = ({ saveFile, onDataCallback 
         break;
       default:
         throw new Error('Invalide resourceType selected.');
-        break;
     }
     onDataCallback(saveFileNew);
     setInputValue('');
