@@ -14,6 +14,7 @@ import CreatureCard from './AddCreature';
 import KnowledgeCard from './AddKnowledge';
 import MaterialsCard from './AddMaterials';
 import DustCard from './AddDust';
+import MenuAppBar from './MainBar';
 
 const App = () =>
 {
@@ -39,10 +40,8 @@ const App = () =>
   return (
     <div>
       <ToastContainer />
-      <header>
-        <h1 style={{textAlign: "center"}}>Siralim Ultimate Saver</h1>
-      </header>
-      <main style={{paddingBottom: "50vh"}}>
+      <MenuAppBar />
+      <main style={{ paddingBottom: "50vh" }}>
         <Column cards={cards} />
       </main>
     </div>
