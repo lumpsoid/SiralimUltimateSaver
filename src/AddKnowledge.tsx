@@ -74,7 +74,7 @@ const KnowledgeCard: React.FC<KnowledgeCardProps> = ({ saveFile, onDataCallback 
           defaultValue={Knowledge.S}
           onChangeCallback={onKnowledgeSelect}
         />
-        <Button variant="outlined" color="primary" onClick={KnowledgeAddClick}>
+        <Button variant="contained" color="primary" onClick={KnowledgeAddClick}>
           Add knowledge
         </Button>
       </CardContent>

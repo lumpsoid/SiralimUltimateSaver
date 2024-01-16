@@ -99,7 +99,7 @@ const ResourcesCard: React.FC<ResourcesCardProps> = ({ saveFile, onDataCallback 
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Enter resource new value"
         />
-        <Button variant="outlined" color="primary" onClick={addBrimstoneClick}>
+        <Button variant="contained" color="primary" onClick={addBrimstoneClick}>
           Add resource
         </Button>
       </CardContent>

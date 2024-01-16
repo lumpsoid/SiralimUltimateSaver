@@ -50,7 +50,7 @@ const MaterialsCard: React.FC<MaterialsCardProps> = ({ saveFile, onDataCallback 
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Enter materials new value"
         />
-        <Button variant="outlined" color="primary" onClick={addMaterialsClick}>
+        <Button variant="contained" color="primary" onClick={addMaterialsClick}>
           Add materials
         </Button>
       </CardContent>

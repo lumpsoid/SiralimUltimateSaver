@@ -92,7 +92,7 @@ const CreatureCard: React.FC<AddCreatureProps> = ({ saveFile, onDataCallback }) 
           defaultValue={personalityValue}
           onChangeCallback={onPersonalitySelect}
         />
-        <Button variant="outlined" color="primary" onClick={addCreatureClick}>
+        <Button variant="contained" color="primary" onClick={addCreatureClick}>
           Summon creature
         </Button>
       </CardContent>

@@ -2,11 +2,25 @@ import React, { useState } from 'react';
 import { Notification } from "./Notification";
 import { SaveFile, decodeFile, encodeFile, isFileEncoded } from "./SaveFile";
 
+import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Typography from '@mui/material/Typography';
 import BasicSelect from './BasicSelect';
+
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 
 interface FileUploaderProps {
   saveFile: SaveFile | null,
@@ -122,17 +136,19 @@ const FileUploader: React.FC<FileUploaderProps> = ({ saveFile, onDataCallback })
         {selectedFile ? (
           <div>
             <Typography variant="h6">Selected File: {selectedFile.name}</Typography>
-            <Button variant="outlined" color="primary" onClick={handleClearFile}>
+            <Button variant="contained" color="primary" onClick={handleClearFile}>
               Clear File
             </Button>
-            <Button variant="outlined" color="primary" onClick={handleSaveFile}>
+            <Button variant="contained" color="primary" onClick={handleSaveFile}>
               Save
             </Button>
           </div>
         ) : (
           <div>
-            <Typography variant="h6">Choose save file</Typography>
-            <input key={key} type="file" onChange={handleFileChange} />
+            <Button sx={{marginBottom: "5px"}} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+            Choose save file
+              <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+            </Button>
           </div>
         )}
         <BasicSelect

@@ -40,7 +40,7 @@ const SummonCard: React.FC<SummonAddProps> = ({saveFile, onDataCallback}) => {
       <CardContent className="summonAdd card">
         <h3>Add mana for summon</h3>
         <CreatureNameField onChangeCallback={onAutocompletionSelect} />
-        <Button variant="outlined" color="primary" onClick={SummonAddClick}>
+        <Button variant="contained" color="primary" onClick={SummonAddClick}>
           Add mana
         </Button>
       </CardContent>

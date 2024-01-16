@@ -50,7 +50,7 @@ const DustCard: React.FC<DustCardProps> = ({ saveFile, onDataCallback }) =>
           onChange={(e) => setInputValue(e.target.value)}
           placeholder="Enter dust new value"
         />
-        <Button variant="outlined" color="primary" onClick={addDustClick}>
+        <Button variant="contained" color="primary" onClick={addDustClick}>
           Add dust
         </Button>
       </CardContent>
