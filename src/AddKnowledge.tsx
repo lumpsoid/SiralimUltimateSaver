@@ -33,12 +33,12 @@ const KnowledgeCard: React.FC<KnowledgeCardProps> = ({ saveFile, onDataCallback 
   {
     if (saveFile === null)
     {
-      Alert('saveFile is null');
+      Alert('Provide a save file.');
       return;
     }
     if (creatureName === '')
     {
-      Alert('Creature name is null');
+      Alert("Choose creature.");
       return;
     }
 

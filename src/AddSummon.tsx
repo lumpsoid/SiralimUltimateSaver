@@ -17,7 +17,7 @@ const SummonCard: React.FC<SummonAddProps> = ({saveFile, onDataCallback}) => {
 
   const SummonAddClick = () => {
     if (saveFile === null) {
-      Alert('saveFile is null');
+      Alert('Provide a save file.');
       return;
     }
     if (inputValue === '') {

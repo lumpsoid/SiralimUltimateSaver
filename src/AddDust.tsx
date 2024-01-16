@@ -21,7 +21,7 @@ const DustCard: React.FC<DustCardProps> = ({ saveFile, onDataCallback }) =>
   {
     if (saveFile === null)
     {
-      Alert('saveFile is null');
+      Alert('Provide a save file.');
       return;
     }
     if (Number.isNaN(parseInt(dustValue, 10)))

@@ -21,7 +21,7 @@ const MaterialsCard: React.FC<MaterialsCardProps> = ({ saveFile, onDataCallback 
   {
     if (saveFile === null)
     {
-      Alert('saveFile is null');
+      Alert('Provide a save file.');
       return;
     }
     if (Number.isNaN(parseInt(materialsValue, 10)))

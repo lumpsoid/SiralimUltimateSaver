@@ -47,7 +47,7 @@ const CreatureCard: React.FC<AddCreatureProps> = ({ saveFile, onDataCallback }) 
   {
     if (saveFile === null)
     {
-      Alert('saveFile is null.');
+      Alert('Provide a save file.');
       return;
     }
     if (creatureValue === '')

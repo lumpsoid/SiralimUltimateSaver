@@ -35,7 +35,7 @@ const ResourcesCard: React.FC<ResourcesCardProps> = ({ saveFile, onDataCallback 
   {
     if (saveFile === null)
     {
-      Alert('saveFile is null');
+      Alert('Provide a save file.');
       return;
     }
     if (Number.isNaN(parseInt(inputValue, 10)))
