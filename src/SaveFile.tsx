@@ -190,7 +190,6 @@ export const addKnowledge = (
   {
     throw new Error("Knowledge part was not found.");
   }
-  console.log(matchKnowledge);
   const creatureId = getCreatureId(creatureData, creatureName);
   const knowledgeArray = matchKnowledge[1];
   const creaturePatter = new RegExp(`(${creatureId},\\d+),?`);
@@ -226,7 +225,6 @@ export const changeValueByKey = (
   value: string): SaveFile =>
 {
   const regexPattern = new RegExp(`${key}="(.*)"\\n`);
-  console.log(file.contentNew.match(regexPattern));
   const contentNew = file.contentNew.replace(
     regexPattern,
     `${key}="${value}"\n`

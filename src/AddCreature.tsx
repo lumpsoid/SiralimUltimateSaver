@@ -45,7 +45,6 @@ const CreatureCard: React.FC<AddCreatureProps> = ({ saveFile, onDataCallback }) 
 
   const addCreatureClick = () =>
   {
-    console.log('addCreatureClick')
     if (saveFile === null)
     {
       Alert('saveFile is null.');
@@ -61,7 +60,6 @@ const CreatureCard: React.FC<AddCreatureProps> = ({ saveFile, onDataCallback }) 
       Alert('Choose creature personality.');
       return;
     }
-    console.log(`personalityValue: ${personalityValue}`)
     const saveFileNew = creatureAdd(
       saveFile,
       creatureData,
@@ -80,9 +78,6 @@ const CreatureCard: React.FC<AddCreatureProps> = ({ saveFile, onDataCallback }) 
   const onPersonalitySelect = (newValue: string) =>
   {
     setPersonalityValue(newValue as Personality);
-    console.log('onPersonalitySelect')
-    console.log(`personalityValue: ${personalityValue}`);
-    console.log(`newValue: ${newValue}`);
   }
 
   return (

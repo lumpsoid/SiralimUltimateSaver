@@ -44,7 +44,6 @@ const ResourcesCard: React.FC<ResourcesCardProps> = ({ saveFile, onDataCallback 
       return;
     }
     let saveFileNew;
-    console.log(`resourceType: ${resourceType}`);
     switch (resourceType) {
       case "All":
         let saveFileUpdated = changeValueByKey(saveFile, "Brimstone", inputValue);
