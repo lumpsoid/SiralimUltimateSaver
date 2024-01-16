@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/SiralimUltimateSaver/static/css/main.38a6d445.css",
-    "main.js": "/SiralimUltimateSaver/static/js/main.e603f319.js",
+    "main.js": "/SiralimUltimateSaver/static/js/main.6500de42.js",
     "static/js/787.d7fede09.chunk.js": "/SiralimUltimateSaver/static/js/787.d7fede09.chunk.js",
     "index.html": "/SiralimUltimateSaver/index.html",
     "main.38a6d445.css.map": "/SiralimUltimateSaver/static/css/main.38a6d445.css.map",
-    "main.e603f319.js.map": "/SiralimUltimateSaver/static/js/main.e603f319.js.map",
+    "main.6500de42.js.map": "/SiralimUltimateSaver/static/js/main.6500de42.js.map",
     "787.d7fede09.chunk.js.map": "/SiralimUltimateSaver/static/js/787.d7fede09.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.38a6d445.css",
-    "static/js/main.e603f319.js"
+    "static/js/main.6500de42.js"
   ]
 }
