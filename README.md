@@ -6,6 +6,21 @@ If you are interested in building builds, there is [the site](https://berated-be
 
 This project based on [gurgalex](https://github.com/gurgalex) work on implementing encryption and decryption of the Siralim save file ([his repo]( https://github.com/gurgalex/SiralimUltimateSaver)).
 
+## Available manipulations
+- Add:
+  - resource:
+    - all
+    - brimstone
+    - essence
+    - power
+    - crystal
+    - granite
+  - materials
+  - dust
+- Add mana for a summon
+- Add knowledge about a creature
+- Add a creature
+
 ## Running the app locally
 
 To run the application locally, you'll need to have NodeJS and npm installed. Begin by installing the required packages using:
