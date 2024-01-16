@@ -26,18 +26,24 @@ button {
 
 @media only screen and (max-width: 900px) {
   .card {
-    width: 45vw;
+    width: 50vw;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .card {
+    width: 60vw;
   }
 }
 
 @media only screen and (max-width: 660px) {
   .card {
-    width: 55vw;
+    width: 70vw;
   }
 }
 
 @media only screen and (max-width: 500px) {
   .card {
-    width: 65vw;
+    width: 85vw;
   }
 }
