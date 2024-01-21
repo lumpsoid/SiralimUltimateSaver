@@ -19,16 +19,14 @@ import MenuAppBar from './MainBar';
 const App = () =>
 {
   const [saveFile, setSaveFile] = useState<SaveFile | null>(null);
-  const [keyUploader, setUploaderKey] = useState<number>(0);
 
   const handleSaveFile = (data: SaveFile | null) =>
   {
     setSaveFile(data);
-    setUploaderKey(keyUploader + 1);
   };
 
   const cards: React.ReactElement[] = [
-    <FileUploader key={keyUploader} saveFile={saveFile} onDataCallback={handleSaveFile} />,
+    <FileUploader saveFile={saveFile} setSaveFile={handleSaveFile} />,
     <ResourcesCard saveFile={saveFile} onDataCallback={handleSaveFile} />,
     <MaterialsCard saveFile={saveFile} onDataCallback={handleSaveFile} />,
     <DustCard saveFile={saveFile} onDataCallback={handleSaveFile} />,

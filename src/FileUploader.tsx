@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Notification } from "./Notification";
+import { Alert, Notification } from "./Notification";
 import { SaveFile, decodeFile, encodeFile, isFileEncoded } from "./SaveFile";
 
 import { styled } from '@mui/material/styles';
@@ -22,87 +22,103 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-interface FileUploaderProps {
+interface FileUploaderProps
+{
   saveFile: SaveFile | null,
-  onDataCallback: (data: SaveFile | null) => void; // Adjust the type according to your callback requirements
+  setSaveFile: (data: SaveFile | null) => void; // Adjust the type according to your callback requirements
 }
 
-const FileUploader: React.FC<FileUploaderProps> = ({ saveFile, onDataCallback }) => {
-  const [selectedFile, setSelectedFile] = useState<SaveFile | null>(saveFile);
-  const [key, setKey] = useState(0);
+const FileUploader: React.FC<FileUploaderProps> = ({ saveFile, setSaveFile }) =>
+{
+  const [isFileExist, setFileExist] = useState<boolean>(false);
   const [saveType, setSaveType] = useState<string>("encoded");
 
   const saveTypeOptions = [
-    {label: "save file", value: "encoded"},
-    {label: "text", value: "decoded"},
+    { label: "save file", value: "encoded" },
+    { label: "text", value: "decoded" },
   ];
 
-  const onSaveTypeSelect = (newValue: string) => {
+  const onSaveTypeSelect = (newValue: string) =>
+  {
     setSaveType(newValue);
   }
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files == null) {
-      Notification('File is not found.');
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+  {
+    if (event.target.files == null)
+    {
+      Alert('File is not found.');
       return;
     }
     const namePattern = /.*\.sav.*/;
     const file = event.target.files[0];
-    if (file) {     
+    if (file)
+    {
       // if bigger than 10 Mb
-      if (file.size > 10000000) {
-        setKey((prevKey) => prevKey + 1);
-        Notification('File bigger than 10Mb.');
+      if (file.size > 10000000)
+      {
+        Alert('File bigger than 10Mb.');
         return;
       }
-      if (!file.name.match(namePattern)) {
-        setKey((prevKey) => prevKey + 1);
-        Notification('File is not a save file.');
+      if (!file.name.match(namePattern))
+      {
+        Alert('File is not a save file.');
         return;
       }
       // Read the file content
       const fileReader = new FileReader();
-      fileReader.onload = function (e) {
-        if (fileReader.result && typeof fileReader.result === 'string') {
+      fileReader.onload = function (e)
+      {
+        if (fileReader.result && typeof fileReader.result === 'string')
+        {
           const isEncoded = isFileEncoded(fileReader.result);
-          const saveFile = new SaveFile(file.name, fileReader.result, fileReader.result);
+          const saveFile = new SaveFile(
+            file.name,
+            fileReader.result,
+            fileReader.result
+          );
           let saveFileUpdated;
-          if (isEncoded) {
+          if (isEncoded)
+          {
             saveFileUpdated = decodeFile(saveFile);
-          } else {
+          } else
+          {
             saveFileUpdated = saveFile;
           }
-          setSelectedFile(saveFileUpdated);
-          onDataCallback(saveFileUpdated);
-        } else {
-          console.error('File content is not a string.');
+          setSaveFile(saveFileUpdated);
+          setFileExist(true);
+        } else
+        {
+          Alert('File content is not a string.');
         }
       };
       fileReader.readAsText(file);
     }
   };
 
-  const handleClearFile = () => {
+  const handleClearFile = () =>
+  {
     // Clear the selected file by setting it to null
-    setSelectedFile(null);
-    onDataCallback(null);
-    // Increment the key to force re-render with a new file input
-    setKey((prevKey) => prevKey + 1);
+    setSaveFile(null);
+    setFileExist(false);
   };
 
-  const handleSaveFile = () => {
-    if (selectedFile === null) {
-      Notification('No file selected for download.');
+  const handleSaveFile = () =>
+  { 
+    if (saveFile === null)
+    {
+      Alert('No file selected for download.');
       return;
     }
     let blob;
-    switch (saveType) {
+    switch (saveType)
+    {
       case "encoded":
-        const saveFileOutput = encodeFile(selectedFile);
+        const saveFileOutput = encodeFile(saveFile);
         blob = new Blob([saveFileOutput.contentNew]);
         break;
       case "decoded":
-        blob = new Blob([selectedFile.contentNew]);
+        blob = new Blob([saveFile.contentNew]);
         break;
       default:
         throw new Error('Selected invalide save type.')
@@ -117,7 +133,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ saveFile, onDataCallback })
     link.href = url;
 
     // Specify the download attribute with the desired file name
-    link.download = Date.now().toString() + selectedFile.name;
+    link.download = Date.now().toString() + saveFile.name;
 
     // Append the link to the document body
     document.body.appendChild(link);
@@ -133,9 +149,9 @@ const FileUploader: React.FC<FileUploaderProps> = ({ saveFile, onDataCallback })
   return (
     <Card>
       <CardContent className='card fileUploader'>
-        {selectedFile ? (
+        {isFileExist ? (
           <div>
-            <Typography variant="h6">Selected File: {selectedFile.name}</Typography>
+            <Typography variant="h6">Selected File: {saveFile?.name}</Typography>
             <Button variant="contained" color="primary" onClick={handleClearFile}>
               Clear File
             </Button>
@@ -145,8 +161,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({ saveFile, onDataCallback })
           </div>
         ) : (
           <div>
-            <Button sx={{marginBottom: "5px"}} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
-            Choose save file
+            <Button sx={{ marginBottom: "5px" }} component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+              Choose save file
               <VisuallyHiddenInput type="file" onChange={handleFileChange} />
             </Button>
           </div>
