@@ -170,12 +170,12 @@ export const addSummon = (
     parseInt(creatureId, 10),
     "100"
   );
-  
+
   const fileNew = changeValueByKey(file, lineKey, summonArrayNew.join(","));
   return fileNew;
 }
 
-const updateValueAtIndex = (arr: any[], index: number, newValue: string): any[] =>
+const updateValueAtIndex = (arr: string[], index: number, newValue: string): string[] =>
   arr.map((item, i) => (i === index ? newValue : item));
 
 export const addKnowledge = (
@@ -212,7 +212,7 @@ export type CreatureData = {
 const getCreatureId = (data: CreatureData, creatureName: string): string =>
 {
   const creatureId = data[creatureName];
-  if (creatureId === null)
+  if (creatureId === null || creatureId === undefined)
   {
     throw new Error('Data about this creature is missing.')
   }
@@ -243,26 +243,9 @@ const getPairByKey = (file: SaveFile, key: string): string =>
   return match[1];
 }
 
-function* getPairAllByKeyGenerator(file: SaveFile, key: string
-  ): Generator<RegExpMatchArray, void, unknown>
-{
-  const regexPattern = new RegExp(`(${key}=".*")\\n`, 'g');
-  const matches = file.contentNew.matchAll(regexPattern);
-
-  if (!matches)
-  {
-    throw new Error('No match found.');
-  }
-
-  for (const match of matches)
-  {
-    yield match;
-  }
-}
-
 /**
  * key:MaterialQuantity - for materials
- * 
+ *
  * key:DustQuantity - for dust
  */
 export const replaceValuesByKey = (
@@ -396,21 +379,20 @@ function convertLine(
   lineType: LineType,
   encode: ConvertType): string | null
 {
-  let lineNew: string;
   let lineConverted: string;
 
   switch (lineType)
   {
     case LineType.BLOCK:
-      lineNew = line.slice(1, -1);
+      const lineNew = line.slice(1, -1);
       lineConverted = encryption(lineNew, encode);
       lineConverted = `[${lineConverted}]`
       break;
 
     case LineType.PAIR:
-      let [lineKey, lineValue] = splitPairLine(line);
-      let lineKeyConverted = encryption(lineKey, encode);
-      let lineValueConverted = encryption(lineValue, encode);
+      const [lineKey, lineValue] = splitPairLine(line);
+      const lineKeyConverted = encryption(lineKey, encode);
+      const lineValueConverted = encryption(lineValue, encode);
       lineConverted = makePairLine(lineKeyConverted, lineValueConverted);
       break;
 
@@ -503,7 +485,7 @@ export class SaveFile
   }
 
   /**
-   * copyWith -- used to create new instance of the object SaveFile 
+   * copyWith -- used to create new instance of the object SaveFile
    * with updated values provided to the method
    */
   public copyWith({ name, contentOriginal, contentNew }: CopyWithProps): SaveFile

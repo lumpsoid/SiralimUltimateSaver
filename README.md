@@ -23,10 +23,28 @@ This project based on [gurgalex](https://github.com/gurgalex) work on implementi
 - Add knowledge about a creature
 - Add a creature
 
+## Tech stack
+
+Plain TypeScript with no UI framework, bundled with [Vite](https://vitejs.dev/).
+The save-file encryption/decryption and manipulation logic lives in
+`src/core/saveFile.ts`; the UI is built from small DOM factory functions in
+`src/ui/`.
+
 ## Running the app locally
 
-To run the application locally, you'll need to have NodeJS and npm installed. Begin by installing the required packages using:
+To run the application locally, you'll need to have NodeJS and npm installed. Begin by installing the required packages, then start the dev server:
 ```sh
 npm install
-npm start
+npm run dev
+```
+
+To create a production build and preview it:
+```sh
+npm run build
+npm run preview
+```
+
+To deploy to GitHub Pages:
+```sh
+npm run deploy
 ```
