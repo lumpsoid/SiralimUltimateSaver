@@ -266,38 +266,64 @@ enum ConvertType
   DECODE = "DECODE"
 }
 
-export const encodeFile = (file: SaveFile): SaveFile =>
+/**
+ * Blocks the game stores unencrypted. Their header and every line inside them
+ * are passed through verbatim by encode/decode instead of being run through
+ * the character cipher. Newer game versions added `[Decorations]`, which holds
+ * a plain base64 blob; decrypting it produced negative code points and crashed.
+ */
+const PLAINTEXT_BLOCKS = new Set<string>(['Decorations']);
+
+const hasHighCodePoint = (text: string): boolean =>
+  Array.from(text).some((char) => char.charCodeAt(0) >= 128);
+
+/**
+ * Read a block header's name. When decoding, an encrypted header has high code
+ * points and must be decrypted to be read; a plaintext header is already legible.
+ * When encoding, the content is already decoded so the name is read as-is.
+ */
+const blockName = (inner: string, type: ConvertType): string =>
+  type === ConvertType.DECODE && hasHighCodePoint(inner)
+    ? encryption(inner, ConvertType.DECODE)
+    : inner;
+
+const convertFile = (file: SaveFile, type: ConvertType): SaveFile =>
 {
-  const text: string[] = splitLines(file.contentNew);
-  const output: string[] = text
-    .map((line: string) =>
+  const lines = splitLines(file.contentNew);
+  const output: string[] = [];
+  let inPlaintextBlock = false;
+
+  for (const line of lines)
+  {
+    const lineType = checkLineType(line);
+
+    if (lineType === LineType.BLOCK)
     {
-      return convertLine(
-        line,
-        checkLineType(line),
-        ConvertType.ENCODE
-      )
-    })
-    .filter((el) => el !== null) as string[];
+      inPlaintextBlock = PLAINTEXT_BLOCKS.has(blockName(line.slice(1, -1), type));
+      // A plaintext block header is passed through unchanged.
+      output.push(inPlaintextBlock ? line : convertLine(line, lineType, type)!);
+      continue;
+    }
+
+    if (inPlaintextBlock)
+    {
+      // Lines inside a plaintext block are never encrypted; keep them verbatim.
+      if (line !== '') output.push(line);
+      continue;
+    }
+
+    const converted = convertLine(line, lineType, type);
+    if (converted !== null) output.push(converted);
+  }
 
   return file.copyWith({ contentNew: output.join('\n') });
 };
+
+export const encodeFile = (file: SaveFile): SaveFile =>
+  convertFile(file, ConvertType.ENCODE);
 
 export const decodeFile = (file: SaveFile): SaveFile =>
-{
-  const text: string[] = splitLines(file.contentNew);
-  const output: string[] = text
-    .map((line: string) =>
-    {
-      return convertLine(
-        line,
-        checkLineType(line),
-        ConvertType.DECODE
-      )
-    })
-    .filter((el) => el !== null) as string[];
-  return file.copyWith({ contentNew: output.join('\n') });
-};
+  convertFile(file, ConvertType.DECODE);
 
 enum LineType
 {

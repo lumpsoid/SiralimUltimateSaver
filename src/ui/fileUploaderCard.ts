@@ -15,7 +15,7 @@ export function createFileUploaderCard(): HTMLElement
 {
   let saveType = 'encoded';
 
-  const fileInput = el('input', { type: 'file', class: 'file-input' });
+  const fileInput = el('input', { type: 'file', class: 'visually-hidden' });
   fileInput.addEventListener('change', () => handleFileChange(fileInput));
 
   const chooseButton = el('label', { class: 'btn' }, 'Choose save file', fileInput);
@@ -73,20 +73,32 @@ function handleFileChange(input: HTMLInputElement): void
   }
 
   const reader = new FileReader();
+  reader.onerror = () =>
+  {
+    alertToast('Could not read the file.');
+  };
   reader.onload = () =>
   {
-    if (typeof reader.result !== 'string')
+    try
     {
-      alertToast('File content is not a string.');
-      return;
+      if (typeof reader.result !== 'string')
+      {
+        alertToast('File content is not a string.');
+        return;
+      }
+      const saveFile = new SaveFile(file.name, reader.result, reader.result);
+      saveFileStore.set(isFileEncoded(reader.result) ? decodeFile(saveFile) : saveFile);
+    } catch (error)
+    {
+      console.error(error);
+      alertToast(`Could not load the save file: ${(error as Error).message}`);
+    } finally
+    {
+      // Allow re-selecting the same file later.
+      input.value = '';
     }
-    const saveFile = new SaveFile(file.name, reader.result, reader.result);
-    saveFileStore.set(isFileEncoded(reader.result) ? decodeFile(saveFile) : saveFile);
   };
   reader.readAsText(file);
-
-  // Allow re-selecting the same file later.
-  input.value = '';
 }
 
 function handleClear(): void
