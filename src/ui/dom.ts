@@ -101,3 +101,22 @@ export function card(title: string, ...children: Child[]): HTMLElement
     ...children,
   );
 }
+
+/**
+ * Build a labelled group of cards (e.g. "Resources", "Creatures").
+ * `variant` scopes the accent colour via the `.group--<variant>` class.
+ */
+export function cardGroup(
+  title: string,
+  variant: 'resources' | 'creatures',
+  ...cards: Child[]
+): HTMLElement
+{
+  return el('section', { class: `group group--${variant}` },
+    el('div', { class: 'group-header' },
+      el('h2', { class: 'group-title' }, title),
+      el('span', { class: 'group-rule' }),
+    ),
+    ...cards,
+  );
+}

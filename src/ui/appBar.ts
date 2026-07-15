@@ -25,6 +25,7 @@ export function createAppBar(): HTMLElement
   link.innerHTML = GITHUB_ICON;
 
   return el('header', { class: 'appbar' },
+    el('span', { class: 'appbar-sigil', ariaHidden: 'true' }, '✦'),
     el('h1', { class: 'appbar-title' }, 'Siralim Ultimate Saver'),
     link,
   );
